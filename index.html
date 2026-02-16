@@ -8,316 +8,341 @@
     <!-- PWA SETTINGS -->
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="icon" type="image/png" href="logo.png">
 
-    <!-- CSS Libraries -->
+    <!-- LIBRARIES -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --vg-blue: #001f60;
             --vg-green: #00c853;
-            --vg-dark: #0f172a;
-            --bg-light: #f3f4f6;
+            --vg-accent: #f59e0b;
+            --bg-body: #f8f9fa;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--vg-dark);
+            background-color: var(--bg-body);
+            color: #334155;
             overflow-x: hidden;
         }
 
-        /* 1. TOP NAVBAR (Para malinis ang Logo) */
-        .app-header {
-            background: white;
-            padding: 15px 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        /* 1. COMPACT NAVBAR (Logo Left, Name Beside it) */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            text-align: center;
-        }
-
-        .header-logo {
-            height: 60px; /* Adjust height para bumagay */
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* 2. HERO SECTION */
-        .hero-section {
-            background: linear-gradient(160deg, var(--vg-blue) 0%, #000c24 100%);
-            min-height: 280px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-bottom: 70px;
-            border-radius: 0 0 40px 40px;
-            position: relative;
         }
         
-        /* Background decorative icon */
-        .hero-bg-icon {
-            font-size: 8rem;
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            height: 45px; /* Saktong laki lang */
+            width: auto;
+        }
+
+        .brand-text {
+            line-height: 1.2;
+        }
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--vg-blue);
+            letter-spacing: 0.5px;
+            display: block;
+        }
+        .brand-sub {
+            font-size: 0.7rem;
+            color: #64748b;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 2. ENHANCED HERO SECTION */
+        .hero-section {
+            background: var(--vg-blue);
+            /* Subtle pattern overlay para mukhang premium */
+            background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 25%),
+                              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 25%);
+            min-height: 280px;
             color: white;
-            opacity: 0.05;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* 3. SEARCH CARD (Floating) */
-        .search-container {
-            width: 90%;
-            max-width: 500px;
-            margin: -60px auto 30px; /* Float effect */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 60px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
             position: relative;
-            z-index: 10;
+            overflow: hidden;
         }
 
+        /* 3. CENTERED CONTENT CONTAINER (Para hindi sobrang lapad) */
+        .main-container {
+            max-width: 850px; /* Ito ang limit para hindi stretched */
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* 4. SEARCH CARD */
         .search-card {
             background: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,31,96,0.15);
+            box-shadow: 0 20px 40px rgba(0, 31, 96, 0.1);
+            margin-top: -50px; /* Float effect */
+            z-index: 10;
+            position: relative;
         }
 
         .search-input {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--vg-blue);
             text-transform: uppercase;
             text-align: center;
-            letter-spacing: 1px;
-            transition: 0.3s;
             background: #f8fafc;
+            transition: 0.3s;
         }
         .search-input:focus {
             background: white;
             border-color: var(--vg-blue);
+            box-shadow: 0 0 0 5px rgba(0, 31, 96, 0.1);
             outline: none;
         }
 
         .btn-track {
             width: 100%;
             margin-top: 15px;
-            padding: 15px;
-            background: linear-gradient(90deg, #ff8f00, #ff6f00);
-            color: white;
-            font-weight: 800;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--vg-accent) 0%, #d97706 100%);
             border: none;
             border-radius: 12px;
+            color: white;
+            font-weight: 800;
             font-size: 1rem;
             letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(255, 111, 0, 0.25);
-            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
         }
-        .btn-track:active { transform: scale(0.98); }
+        .btn-track:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
 
-        /* 4. RESULT CARD */
+        /* 5. RESULT SECTION */
         .result-area {
             display: none;
-            width: 90%;
-            max-width: 600px;
-            margin: 0 auto 50px;
-            animation: slideUp 0.5s ease;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .status-card {
+        .waybill-card {
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
             border-top: 6px solid var(--vg-green);
         }
 
-        .status-header {
-            padding: 20px;
-            background: #f8fafc;
-            border-bottom: 1px solid #eee;
+        .waybill-header {
+            padding: 25px;
+            background: #fff;
+            border-bottom: 1px solid #f1f5f9;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* PROGRESS STEPPER (Visual) */
+        /* Stepper */
+        .stepper-container {
+            padding: 30px 20px;
+            background: white;
+        }
         .stepper {
             display: flex;
             justify-content: space-between;
-            padding: 20px 30px;
             position: relative;
+            max-width: 400px;
+            margin: 0 auto;
         }
-        .step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            opacity: 0.5;
+        .stepper::before {
+            content: ''; position: absolute; top: 20px; left: 10%; right: 10%;
+            height: 3px; background: #e2e8f0; z-index: 0;
         }
-        .step.active { opacity: 1; color: var(--vg-green); }
+        .step { position: relative; z-index: 1; text-align: center; opacity: 0.5; transition: 0.3s; }
+        .step.active { opacity: 1; }
         .step-icon {
-            font-size: 1.5rem;
-            background: white;
-            margin-bottom: 5px;
+            width: 45px; height: 45px; background: white; border: 3px solid #e2e8f0;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px; color: #94a3b8; font-size: 1.1rem;
+            transition: 0.3s;
         }
-        .step-line {
-            position: absolute;
-            top: 35px;
-            left: 40px;
-            right: 40px;
-            height: 2px;
-            background: #e2e8f0;
-            z-index: 1;
+        .step.active .step-icon {
+            border-color: var(--vg-green); color: var(--vg-green);
+            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.1);
         }
+        .step-label { font-size: 0.75rem; font-weight: 700; color: var(--vg-blue); text-transform: uppercase; }
 
-        .info-grid {
-            padding: 20px;
-        }
-        
+        /* Timeline */
         .timeline-section {
-            padding: 0 20px 20px;
+            background: #f8fafc;
+            padding: 25px;
+            border-top: 1px solid #f1f5f9;
         }
         .timeline-item {
             position: relative;
-            padding-left: 35px;
+            padding-left: 30px;
             padding-bottom: 25px;
             border-left: 2px dashed #cbd5e1;
+            margin-left: 10px;
         }
         .timeline-item:last-child { border: none; padding-bottom: 0; }
-        .t-icon {
-            position: absolute;
-            left: -11px;
-            top: 0;
-            background: #cbd5e1;
-            color: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
+        .timeline-dot {
+            position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: #cbd5e1; outline: 4px solid #f8fafc;
         }
-        .timeline-item.active .t-icon {
+        .timeline-item.active .timeline-dot {
             background: var(--vg-green);
-            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.2);
+            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.3);
         }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Responsive */
+        @media (max-width: 576px) {
+            .navbar-brand { gap: 8px; }
+            .logo-img { height: 35px; }
+            .brand-title { font-size: 0.95rem; }
+            .brand-sub { font-size: 0.6rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER (White Bar for Logo) -->
-    <header class="app-header">
-        <img src="logo.png" alt="VG Freightage" class="header-logo" onerror="this.style.display='none'; document.getElementById('txtLogo').style.display='block'">
-        <div id="txtLogo" style="display:none; color:var(--vg-blue); font-weight:800;">VG FREIGHTAGE</div>
-    </header>
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="main-container w-100 d-flex justify-content-between align-items-center">
+            
+            <!-- Logo & Name (LEFT SIDE) -->
+            <div class="navbar-brand">
+                <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <span class="brand-title">VG FREIGHTAGE</span>
+                    <span class="brand-sub d-block">Domestic Services</span>
+                </div>
+            </div>
 
-    <!-- 2. HERO (Blue Gradient) -->
-    <div class="hero-section">
-        <i class="fas fa-box-open hero-bg-icon"></i> <!-- Decorative BG -->
-        <h2 class="fw-bold mb-1">Track Your Parcel</h2>
-        <p class="text-white-50 small">Real-time Domestic Logistics Tracking</p>
-    </div>
+            <!-- Optional: Help/Contact Icon (RIGHT SIDE) -->
+            <div>
+                <a href="#" class="text-decoration-none text-muted small fw-bold">
+                    <i class="fas fa-headset me-1"></i> <span class="d-none d-sm-inline">Support</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- 3. SEARCH CARD -->
-    <div class="search-container">
+    <!-- 2. HERO SECTION -->
+    <section class="hero-section">
+        <div class="main-container">
+            <h2 class="fw-bold mb-2">Track Your Shipment</h2>
+            <p class="text-white-50 m-0">Enter your waybill number below</p>
+        </div>
+    </section>
+
+    <!-- 3. MAIN CONTENT (Boxed Layout) -->
+    <div class="main-container">
+        
+        <!-- Search Box -->
         <div class="search-card">
-            <label class="small fw-bold text-muted mb-2 ms-1">WAYBILL NUMBER</label>
             <input type="text" id="trackInput" class="search-input" placeholder="VG-XXXXXX">
             <button class="btn-track" onclick="trackParcel()">TRACK NOW</button>
             <p id="errorMsg" class="text-danger small fw-bold text-center mt-3 mb-0" style="display:none;"></p>
         </div>
-    </div>
 
-    <!-- 4. RESULT AREA -->
-    <div id="resultArea" class="result-area">
-        <div class="status-card">
-            
-            <!-- Header -->
-            <div class="status-header">
-                <div>
-                    <small class="text-muted fw-bold" style="font-size:0.7rem">WAYBILL ID</small>
-                    <h4 class="fw-bold m-0 text-dark" id="resWaybill">...</h4>
+        <!-- Result Area -->
+        <div id="resultArea" class="result-area">
+            <div class="waybill-card">
+                
+                <!-- Header -->
+                <div class="waybill-header">
+                    <div>
+                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">WAYBILL ID</small>
+                        <h3 class="fw-bold m-0 text-dark" id="resWaybill">...</h3>
+                    </div>
+                    <span class="badge bg-light text-dark border" id="resStatusBadge">...</span>
                 </div>
-                <span class="badge bg-warning text-dark" id="resStatusBadge">...</span>
-            </div>
 
-            <!-- Visual Progress -->
-            <div class="position-relative">
-                <div class="step-line"></div>
-                <div class="stepper">
-                    <div class="step active">
-                        <div class="step-icon"><i class="fas fa-box"></i></div>
-                        <small class="fw-bold" style="font-size:0.7rem">Posted</small>
-                    </div>
-                    <div class="step" id="step-transit">
-                        <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
-                        <small class="fw-bold" style="font-size:0.7rem">In Transit</small>
-                    </div>
-                    <div class="step" id="step-delivered">
-                        <div class="step-icon"><i class="fas fa-home"></i></div>
-                        <small class="fw-bold" style="font-size:0.7rem">Delivered</small>
+                <!-- Stepper -->
+                <div class="stepper-container">
+                    <div class="stepper">
+                        <div class="step active">
+                            <div class="step-icon"><i class="fas fa-box"></i></div>
+                            <div class="step-label">Posted</div>
+                        </div>
+                        <div class="step" id="step-transit">
+                            <div class="step-icon"><i class="fas fa-truck-fast"></i></div>
+                            <div class="step-label">Transit</div>
+                        </div>
+                        <div class="step" id="step-delivered">
+                            <div class="step-icon"><i class="fas fa-home"></i></div>
+                            <div class="step-label">Delivered</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <hr class="m-0 border-light">
-
-            <!-- Details -->
-            <div class="info-grid">
-                <div class="row g-3">
-                    <div class="col-6">
+                <div class="row text-center border-top border-bottom g-0">
+                    <div class="col-6 p-3 border-end">
                         <small class="text-muted fw-bold d-block" style="font-size:0.7rem">ORIGIN</small>
                         <span class="fw-bold text-dark" id="resOrigin">...</span>
                     </div>
-                    <div class="col-6 text-end">
+                    <div class="col-6 p-3">
                         <small class="text-muted fw-bold d-block" style="font-size:0.7rem">DESTINATION</small>
                         <span class="fw-bold text-dark" id="resDest">...</span>
                     </div>
-                    <div class="col-6">
-                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">SENDER</small>
-                        <span class="fw-bold text-dark" id="resShipper">...</span>
-                    </div>
-                    <div class="col-6 text-end">
-                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">RECEIVER</small>
-                        <span class="fw-bold text-dark" id="resConsignee">...</span>
-                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline-section">
+                    <h6 class="fw-bold small text-muted mb-3">ACTIVITY LOG</h6>
+                    <div id="historyContainer"></div>
                 </div>
             </div>
 
-            <!-- Timeline -->
-            <div class="bg-light p-3">
-                <h6 class="fw-bold small text-muted mb-3 ms-2">TIMELINE ACTIVITY</h6>
-                <div id="historyContainer" class="timeline-section"></div>
+            <div class="text-center mt-4 text-muted small">
+                &copy; 2026 VG Freightage Domestic
             </div>
+        </div>
 
-        </div>
-        
-        <div class="text-center mt-4 text-muted small">
-            &copy; 2026 VG Freightage Domestic
-        </div>
     </div>
 
-    <!-- JS LOGIC -->
+    <!-- JS Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
+        // *** CONFIG (VG-CARGO-SYSTEM-3) ***
         const firebaseConfig = {
             apiKey: "AIzaSyCrDEUr1O5krXFHEB2hafLXuEumEcoSTxM",
             authDomain: "vg-cargo-system-3.firebaseapp.com",
@@ -337,11 +362,12 @@
             const resultArea = document.getElementById('resultArea');
             const errorMsg = document.getElementById('errorMsg');
 
-            input.blur(); // Hide keyboard
+            input.blur();
 
             if(!wb) { input.focus(); return; }
 
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> SEARCHING...';
+            // Loading
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> PROCESSING...';
             btn.disabled = true;
             resultArea.style.display = 'none';
             errorMsg.style.display = 'none';
@@ -356,18 +382,14 @@
                     document.getElementById('resWaybill').innerText = data.waybill;
                     const status = data.currentStatus || "Unknown";
                     
-                    // Update Badge
-                    const badge = document.getElementById('resStatusBadge');
-                    badge.innerText = status;
-                    badge.className = `badge ${getStatusColor(status)}`;
+                    // Status Badge
+                    document.getElementById('resStatusBadge').innerText = status;
 
-                    // Update Stepper Visuals
+                    // Stepper Update
                     updateStepper(status);
 
-                    // Details
-                    document.getElementById('resShipper').innerText = data.shipper.name.split(' ')[0]; // First name only for brevity
+                    // Locations
                     document.getElementById('resOrigin').innerText = extractCity(data.shipper.addr);
-                    document.getElementById('resConsignee').innerText = data.consignee.name.split(' ')[0];
                     document.getElementById('resDest').innerText = extractCity(data.consignee.addr);
 
                     // Timeline
@@ -377,7 +399,7 @@
                         const isActive = index === 0 ? 'active' : '';
                         historyHTML += `
                         <div class="timeline-item ${isActive}">
-                            <div class="t-icon"><i class="fas fa-check"></i></div>
+                            <div class="timeline-dot"></div>
                             <h6 class="fw-bold mb-1 small text-dark">${h.status}</h6>
                             <p class="small text-muted mb-0"><i class="fas fa-map-pin me-1"></i> ${h.location}</p>
                             <small class="text-muted" style="font-size:0.65rem">${h.time}</small>
@@ -388,7 +410,8 @@
                     resultArea.style.display = 'block';
 
                     setTimeout(() => {
-                        resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const y = resultArea.getBoundingClientRect().top + window.scrollY - 80;
+                        window.scrollTo({top: y, behavior: 'smooth'});
                     }, 100);
 
                 } else {
@@ -397,7 +420,7 @@
                 }
             } catch (error) {
                 console.error(error);
-                errorMsg.innerText = "Connection error. Try again.";
+                errorMsg.innerText = "Connection error. Please try again.";
                 errorMsg.style.display = 'block';
             }
 
@@ -411,22 +434,16 @@
             return parts.length > 1 ? parts[parts.length - 1].trim() : addr;
         }
 
-        function getStatusColor(status) {
-            status = status.toUpperCase();
-            if(status.includes("DELIVERED")) return "bg-success";
-            if(status.includes("TRANSIT") || status.includes("BOARD")) return "bg-primary";
-            return "bg-secondary";
-        }
-
         function updateStepper(status) {
             status = status.toUpperCase();
             const sTransit = document.getElementById('step-transit');
             const sDelivered = document.getElementById('step-delivered');
 
-            sTransit.className = 'step'; 
-            sDelivered.className = 'step';
+            // Reset
+            sTransit.classList.remove('active');
+            sDelivered.classList.remove('active');
 
-            if(status.includes("TRANSIT") || status.includes("BOARD") || status.includes("ARRIVED")) {
+            if(status.includes("TRANSIT") || status.includes("BOARD") || status.includes("ARRIVED") || status.includes("DEPARTED")) {
                 sTransit.classList.add('active');
             }
             if(status.includes("DELIVERED")) {
