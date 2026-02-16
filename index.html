@@ -24,12 +24,11 @@
             color: #333;
         }
 
-        /* HERO SECTION - PROFESSIONAL LOOK */
+        /* HERO SECTION */
         .hero-section {
             background: linear-gradient(135deg, var(--brand-blue) 0%, #1e3a8a 100%);
             min-height: 350px;
             color: white;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,19 +40,27 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* FLOATING SEARCH BOX */
+        /* FLOATING SEARCH CARD */
         .search-card {
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            width: 100%;
+            width: 90%;
             max-width: 600px;
-            margin-top: -50px; /* Overlap effect */
+            margin: -60px auto 0; /* Float effect */
             z-index: 10;
+            position: relative;
+        }
+
+        /* INPUT STYLES - DESKTOP DEFAULT */
+        .custom-input-group {
+            display: flex;
+            width: 100%;
         }
 
         .search-input {
+            flex-grow: 1;
             border: 2px solid #e5e7eb;
             border-radius: 10px 0 0 10px;
             padding: 15px;
@@ -61,10 +68,12 @@
             font-weight: 600;
             color: var(--brand-blue);
             text-transform: uppercase;
+            outline: none;
+            width: 100%; /* Force width */
         }
+        
         .search-input:focus {
             border-color: var(--brand-blue);
-            box-shadow: none;
         }
 
         .btn-track {
@@ -74,19 +83,39 @@
             border: none;
             padding: 0 30px;
             border-radius: 0 10px 10px 0;
-            transition: all 0.3s;
-        }
-        .btn-track:hover {
-            background-color: #d97706;
-            transform: translateY(-2px);
+            white-space: nowrap;
+            cursor: pointer;
         }
 
-        /* RESULT CARD */
+        /* MOBILE FIX: Stack items vertically */
+        @media (max-width: 768px) {
+            .hero-section { min-height: 280px; padding-bottom: 80px; }
+            
+            .custom-input-group {
+                display: block; /* Break flexbox */
+            }
+            
+            .search-input {
+                border-radius: 10px !important; /* Full round */
+                margin-bottom: 12px;
+                border: 2px solid #e5e7eb !important;
+                width: 100% !important; /* Full width */
+                display: block;
+            }
+            
+            .btn-track {
+                width: 100% !important;
+                border-radius: 10px !important; /* Full round */
+                padding: 15px;
+            }
+        }
+
+        /* RESULT AREA */
         .result-container {
             max-width: 700px;
             margin: 30px auto 50px;
-            display: none; /* Hidden by default */
-            animation: slideUp 0.5s ease;
+            display: none; 
+            padding: 0 15px;
         }
 
         .status-header {
@@ -109,12 +138,7 @@
             margin-bottom: 20px;
         }
 
-        .route-icon {
-            color: #cbd5e1;
-            font-size: 1.5rem;
-        }
-
-        /* TIMELINE DESIGN */
+        /* TIMELINE */
         .timeline-card {
             background: white;
             border-radius: 15px;
@@ -122,107 +146,72 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
-        .timeline-item {
-            position: relative;
-            padding-left: 40px;
-            margin-bottom: 30px;
-        }
+        .timeline-item { position: relative; padding-left: 40px; margin-bottom: 30px; }
         .timeline-item:last-child { margin-bottom: 0; }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #cbd5e1;
-            z-index: 2;
-        }
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 20px;
-            bottom: -35px;
-            width: 2px;
-            background: #e2e8f0;
-            z-index: 1;
-        }
+        .timeline-item::before { content: ''; position: absolute; left: 0; top: 5px; width: 15px; height: 15px; border-radius: 50%; background: #cbd5e1; z-index: 2; }
+        .timeline-item::after { content: ''; position: absolute; left: 7px; top: 20px; bottom: -35px; width: 2px; background: #e2e8f0; z-index: 1; }
         .timeline-item:last-child::after { display: none; }
-
-        /* ACTIVE (LATEST) STATUS */
-        .timeline-item.active::before {
-            background: var(--brand-green);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-        }
+        .timeline-item.active::before { background: var(--brand-green); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2); }
         .timeline-item.active h6 { color: var(--brand-green); }
 
-        /* MOBILE ADJUSTMENTS */
+        /* Small screen adjustments for result */
         @media (max-width: 768px) {
-            .hero-section { min-height: 300px; padding-bottom: 60px; }
-            .search-card { width: 90%; margin-top: -40px; padding: 20px; }
-            .btn-track { width: 100%; border-radius: 10px; margin-top: 10px; padding: 12px; }
-            .search-input { border-radius: 10px; width: 100%; }
-            .input-group { flex-direction: column; }
             .status-header { flex-direction: column; text-align: center; gap: 10px; }
+            .route-card .row { flex-direction: column; gap: 15px; }
+            .col-2 i { transform: rotate(90deg); } /* Arrow down on mobile */
         }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- 1. HERO SECTION -->
+    <!-- HERO -->
     <div class="hero-section">
-        <div class="mb-3">
+        <div class="mb-2">
             <i class="fas fa-shipping-fast fa-3x mb-2" style="color:var(--brand-gold);"></i>
             <h2 class="fw-bold m-0" style="letter-spacing: 1px;">VG FREIGHTAGE</h2>
             <p class="small opacity-75">DOMESTIC CARGO TRACKING SYSTEM</p>
         </div>
     </div>
 
-    <!-- 2. SEARCH BOX (FLOATING) -->
-    <div class="d-flex justify-content-center">
-        <div class="search-card">
-            <label class="fw-bold text-muted small mb-2"><i class="fas fa-barcode me-1"></i> TRACKING NUMBER</label>
-            <div class="input-group">
-                <input type="text" id="trackInput" class="form-control search-input" placeholder="e.g. VG-123456">
-                <button class="btn btn-track" onclick="trackParcel()">
-                    <i class="fas fa-search me-2"></i> TRACK
-                </button>
-            </div>
-            <p id="errorMsg" class="text-danger small mt-2 fw-bold text-center" style="display:none;"></p>
+    <!-- SEARCH CARD (FIXED MOBILE) -->
+    <div class="search-card">
+        <label class="fw-bold text-muted small mb-2"><i class="fas fa-barcode me-1"></i> TRACKING NUMBER</label>
+        
+        <!-- FIXED INPUT GROUP -->
+        <div class="custom-input-group">
+            <input type="text" id="trackInput" class="search-input" placeholder="e.g. VG-123456">
+            <button class="btn-track" onclick="trackParcel()">
+                <i class="fas fa-search me-2"></i> TRACK
+            </button>
         </div>
+        
+        <p id="errorMsg" class="text-danger small mt-2 fw-bold text-center" style="display:none;"></p>
     </div>
 
-    <!-- 3. RESULT SECTION -->
-    <div id="resultArea" class="container result-container">
+    <!-- RESULT -->
+    <div id="resultArea" class="result-container">
         
-        <!-- STATUS HEADER -->
         <div class="status-header">
             <div>
                 <small class="text-muted fw-bold">WAYBILL ID</small>
                 <h3 class="fw-bold m-0 text-dark" id="resWaybill">...</h3>
             </div>
             <div>
-                <span id="resStatusBadge" class="badge rounded-pill bg-success fs-6 px-3 py-2">...</span>
+                <span id="resStatusBadge" class="badge rounded-pill bg-secondary fs-6 px-3 py-2">...</span>
             </div>
         </div>
 
-        <!-- ROUTE INFO -->
         <div class="route-card">
             <div class="row align-items-center text-center">
-                <div class="col-5">
+                <div class="col-5 col-md-5">
                     <small class="text-muted fw-bold">FROM</small>
                     <h5 class="fw-bold text-primary mt-1" id="resShipper">...</h5>
                     <small class="text-muted" id="resOrigin">...</small>
                 </div>
-                <div class="col-2">
-                    <i class="fas fa-chevron-right route-icon"></i>
+                <div class="col-2 col-md-2">
+                    <i class="fas fa-chevron-right text-muted"></i>
                 </div>
-                <div class="col-5">
+                <div class="col-5 col-md-5">
                     <small class="text-muted fw-bold">TO</small>
                     <h5 class="fw-bold text-primary mt-1" id="resConsignee">...</h5>
                     <small class="text-muted" id="resDest">...</small>
@@ -241,25 +230,22 @@
             </div>
         </div>
 
-        <!-- HISTORY TIMELINE -->
         <div class="timeline-card">
             <h6 class="fw-bold mb-4 text-uppercase text-muted border-bottom pb-2">Shipment Progress</h6>
-            <div id="historyContainer">
-                <!-- Timeline items will be injected here -->
-            </div>
+            <div id="historyContainer"></div>
         </div>
-
+        
         <div class="text-center mt-4 text-muted small">
-            &copy; 2026 VG Freightage Domestic. All rights reserved.
+            &copy; 2026 VG Freightage Domestic.
         </div>
     </div>
 
-    <!-- FIREBASE LOGIC -->
+    <!-- FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // *** YOUR CONFIG (VG-CARGO-SYSTEM-3) ***
+        // *** YOUR CONFIG ***
         const firebaseConfig = {
             apiKey: "AIzaSyCrDEUr1O5krXFHEB2hafLXuEumEcoSTxM",
             authDomain: "vg-cargo-system-3.firebaseapp.com",
@@ -278,6 +264,84 @@
             const btn = document.querySelector('.btn-track');
             const resultArea = document.getElementById('resultArea');
             const errorMsg = document.getElementById('errorMsg');
+
+            if(!wb) { input.focus(); return; }
+
+            // LOADING
+            const origBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SEARCHING...';
+            btn.disabled = true;
+            resultArea.style.display = 'none';
+            errorMsg.style.display = 'none';
+
+            try {
+                const docRef = doc(db, "parcels", wb);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    document.getElementById('resWaybill').innerText = data.waybill;
+                    const status = data.currentStatus || "Unknown";
+                    
+                    // STATUS COLOR
+                    const badge = document.getElementById('resStatusBadge');
+                    badge.innerText = status;
+                    badge.className = `badge rounded-pill fs-6 px-3 py-2 ${getStatusColor(status)}`;
+
+                    document.getElementById('resShipper').innerText = data.shipper.name;
+                    document.getElementById('resOrigin').innerText = data.shipper.addr;
+                    document.getElementById('resConsignee').innerText = data.consignee.name;
+                    document.getElementById('resDest').innerText = data.consignee.addr;
+                    document.getElementById('resQty').innerText = data.details.qty;
+                    document.getElementById('resWeight').innerText = data.details.weight;
+
+                    // HISTORY
+                    let historyHTML = "";
+                    const sortedHistory = data.history ? data.history.reverse() : [];
+                    sortedHistory.forEach((h, index) => {
+                        const isActive = index === 0 ? 'active' : '';
+                        historyHTML += `
+                        <div class="timeline-item ${isActive}">
+                            <h6 class="fw-bold mb-1">${h.status}</h6>
+                            <p class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> ${h.location}</p>
+                            <small class="text-muted" style="font-size:0.75rem">${h.time}</small>
+                        </div>`;
+                    });
+
+                    document.getElementById('historyContainer').innerHTML = historyHTML || "<p>No history available.</p>";
+                    resultArea.style.display = 'block';
+
+                    // Auto scroll for mobile
+                    setTimeout(() => {
+                        resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+
+                } else {
+                    errorMsg.innerText = "Tracking number not found. Please check properly.";
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                console.error(error);
+                errorMsg.innerText = "Connection Error. Please try again.";
+                errorMsg.style.display = 'block';
+            }
+
+            btn.innerHTML = origBtnText;
+            btn.disabled = false;
+        }
+
+        function getStatusColor(status) {
+            status = status.toUpperCase();
+            if(status.includes("DELIVERED")) return "bg-success";
+            if(status.includes("PENDING") || status.includes("ACCEPTED")) return "bg-secondary";
+            if(status.includes("TRANSIT") || status.includes("BOARD")) return "bg-primary";
+            if(status.includes("ARRIVED")) return "bg-info text-dark";
+            return "bg-warning text-dark";
+        }
+    </script>
+</body>
+    </html>tElementById('errorMsg');
 
             if(!wb) {
                 input.focus();
@@ -359,3 +423,4 @@
     </script>
 </body>
 </html>
+
