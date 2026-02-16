@@ -22,6 +22,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-light);
             color: #333;
+            overflow-x: hidden;
         }
 
         /* HERO SECTION */
@@ -48,12 +49,12 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             width: 90%;
             max-width: 600px;
-            margin: -60px auto 0; /* Float effect */
+            margin: -60px auto 0;
             z-index: 10;
             position: relative;
         }
 
-        /* INPUT STYLES - DESKTOP DEFAULT */
+        /* INPUT STYLES */
         .custom-input-group {
             display: flex;
             width: 100%;
@@ -69,7 +70,7 @@
             color: var(--brand-blue);
             text-transform: uppercase;
             outline: none;
-            width: 100%; /* Force width */
+            width: 100%;
         }
         
         .search-input:focus {
@@ -85,27 +86,24 @@
             border-radius: 0 10px 10px 0;
             white-space: nowrap;
             cursor: pointer;
+            transition: 0.3s;
         }
+        .btn-track:hover { background-color: #d97706; }
 
-        /* MOBILE FIX: Stack items vertically */
+        /* MOBILE FIXES */
         @media (max-width: 768px) {
             .hero-section { min-height: 280px; padding-bottom: 80px; }
-            
-            .custom-input-group {
-                display: block; /* Break flexbox */
-            }
-            
+            .custom-input-group { display: block; }
             .search-input {
-                border-radius: 10px !important; /* Full round */
+                border-radius: 10px !important;
                 margin-bottom: 12px;
                 border: 2px solid #e5e7eb !important;
-                width: 100% !important; /* Full width */
+                width: 100% !important;
                 display: block;
             }
-            
             .btn-track {
                 width: 100% !important;
-                border-radius: 10px !important; /* Full round */
+                border-radius: 10px !important;
                 padding: 15px;
             }
         }
@@ -154,11 +152,9 @@
         .timeline-item.active::before { background: var(--brand-green); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2); }
         .timeline-item.active h6 { color: var(--brand-green); }
 
-        /* Small screen adjustments for result */
         @media (max-width: 768px) {
             .status-header { flex-direction: column; text-align: center; gap: 10px; }
             .route-card .row { flex-direction: column; gap: 15px; }
-            .col-2 i { transform: rotate(90deg); } /* Arrow down on mobile */
         }
     </style>
 </head>
@@ -173,11 +169,10 @@
         </div>
     </div>
 
-    <!-- SEARCH CARD (FIXED MOBILE) -->
+    <!-- SEARCH CARD -->
     <div class="search-card">
         <label class="fw-bold text-muted small mb-2"><i class="fas fa-barcode me-1"></i> TRACKING NUMBER</label>
         
-        <!-- FIXED INPUT GROUP -->
         <div class="custom-input-group">
             <input type="text" id="trackInput" class="search-input" placeholder="e.g. VG-123456">
             <button class="btn-track" onclick="trackParcel()">
@@ -240,12 +235,12 @@
         </div>
     </div>
 
-    <!-- FIREBASE -->
+    <!-- SCRIPT FIX -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // *** YOUR CONFIG ***
+        // CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyCrDEUr1O5krXFHEB2hafLXuEumEcoSTxM",
             authDomain: "vg-cargo-system-3.firebaseapp.com",
@@ -284,7 +279,6 @@
                     document.getElementById('resWaybill').innerText = data.waybill;
                     const status = data.currentStatus || "Unknown";
                     
-                    // STATUS COLOR
                     const badge = document.getElementById('resStatusBadge');
                     badge.innerText = status;
                     badge.className = `badge rounded-pill fs-6 px-3 py-2 ${getStatusColor(status)}`;
@@ -296,7 +290,6 @@
                     document.getElementById('resQty').innerText = data.details.qty;
                     document.getElementById('resWeight').innerText = data.details.weight;
 
-                    // HISTORY
                     let historyHTML = "";
                     const sortedHistory = data.history ? data.history.reverse() : [];
                     sortedHistory.forEach((h, index) => {
@@ -312,7 +305,6 @@
                     document.getElementById('historyContainer').innerHTML = historyHTML || "<p>No history available.</p>";
                     resultArea.style.display = 'block';
 
-                    // Auto scroll for mobile
                     setTimeout(() => {
                         resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 100);
@@ -341,86 +333,4 @@
         }
     </script>
 </body>
-    </html>tElementById('errorMsg');
-
-            if(!wb) {
-                input.focus();
-                return;
-            }
-
-            // LOADING STATE
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SEARCHING...';
-            btn.disabled = true;
-            resultArea.style.display = 'none';
-            errorMsg.style.display = 'none';
-
-            try {
-                const docRef = doc(db, "parcels", wb);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    
-                    // FILL DATA
-                    document.getElementById('resWaybill').innerText = data.waybill;
-                    document.getElementById('resStatusBadge').innerText = data.currentStatus;
-                    document.getElementById('resStatusBadge').className = `badge rounded-pill px-3 py-2 fs-6 ${getStatusColor(data.currentStatus)}`;
-
-                    document.getElementById('resShipper').innerText = data.shipper.name;
-                    document.getElementById('resOrigin').innerText = data.shipper.addr;
-                    
-                    document.getElementById('resConsignee').innerText = data.consignee.name;
-                    document.getElementById('resDest').innerText = data.consignee.addr;
-                    
-                    document.getElementById('resQty').innerText = data.details.qty;
-                    document.getElementById('resWeight').innerText = data.details.weight;
-
-                    // BUILD TIMELINE
-                    let historyHTML = "";
-                    const sortedHistory = data.history ? data.history.reverse() : [];
-                    
-                    sortedHistory.forEach((h, index) => {
-                        const isActive = index === 0 ? 'active' : ''; // Highlight latest
-                        historyHTML += `
-                        <div class="timeline-item ${isActive}">
-                            <h6 class="fw-bold mb-1">${h.status}</h6>
-                            <p class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> ${h.location}</p>
-                            <small class="text-muted" style="font-size:0.75rem">${h.time}</small>
-                        </div>`;
-                    });
-
-                    document.getElementById('historyContainer').innerHTML = historyHTML || "<p>No history available.</p>";
-                    resultArea.style.display = 'block';
-                    
-                    // Scroll to result on mobile
-                    if(window.innerWidth < 768) {
-                        resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-
-                } else {
-                    errorMsg.innerText = "Tracking number not found. Please check properly.";
-                    errorMsg.style.display = 'block';
-                }
-            } catch (error) {
-                console.error(error);
-                errorMsg.innerText = "Network Error. Please try again.";
-                errorMsg.style.display = 'block';
-            }
-
-            // RESET BUTTON
-            btn.innerHTML = '<i class="fas fa-search me-2"></i> TRACK';
-            btn.disabled = false;
-        }
-
-        function getStatusColor(status) {
-            status = status.toUpperCase();
-            if(status.includes("DELIVERED")) return "bg-success";
-            if(status.includes("PENDING") || status.includes("ACCEPTED")) return "bg-secondary";
-            if(status.includes("TRANSIT") || status.includes("BOARD")) return "bg-primary";
-            if(status.includes("ARRIVED")) return "bg-info text-dark";
-            return "bg-warning text-dark";
-        }
-    </script>
-</body>
 </html>
-
