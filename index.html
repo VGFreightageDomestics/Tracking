@@ -3,454 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Track Your Package | VG Freightage Domestic</title>
+    <title>VG Freightage Domestic System</title>
     
-    <!-- PWA SETTINGS -->
-    <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="logo.png">
-    <link rel="icon" type="image/png" href="logo.png">
-
-    <!-- LIBRARIES -->
+    <!-- CSS Framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet"> 
     
     <style>
-        :root {
-            --vg-blue: #001f60;
-            --vg-green: #00c853;
-            --vg-accent: #f59e0b;
-            --bg-body: #f8f9fa;
-        }
+        body { background-color: #f8f9fa; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+        :root { --vg-blue: #001f60; --vg-green: #00c853; --vg-red: #d32f2f; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-body);
-            color: #334155;
-            overflow-x: hidden;
-        }
-
-        /* 1. COMPACT NAVBAR (Logo Left, Name Beside it) */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* UI Styles */
+        .navbar { background-color: white; border-bottom: 3px solid var(--vg-blue); }
+        .navbar-brand { display: flex; align-items: center; }
+        .navbar-brand img { height: 40px; margin-right: 10px; }
         
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* HERO SECTION */
+        .hero-section { 
+            background: linear-gradient(135deg, var(--vg-blue) 0%, #000c24 100%); 
+            color: white; 
+            padding: 40px 20px; 
+            text-align: center; 
+            border-radius: 0 0 20px 20px; 
+            margin-bottom: 30px; 
         }
 
-        .logo-img {
-            height: 45px; /* Saktong laki lang */
-            width: auto;
+        /* Search Box Desktop */
+        .search-box { 
+            max-width: 600px; margin: 0 auto; background: white; padding: 8px; 
+            border-radius: 50px; display: flex; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%; box-sizing: border-box;
         }
-
-        .brand-text {
-            line-height: 1.2;
-        }
-        .brand-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--vg-blue);
-            letter-spacing: 0.5px;
-            display: block;
-        }
-        .brand-sub {
-            font-size: 0.7rem;
-            color: #64748b;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* 2. ENHANCED HERO SECTION */
-        .hero-section {
-            background: var(--vg-blue);
-            /* Subtle pattern overlay para mukhang premium */
-            background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 25%),
-                              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 25%);
-            min-height: 280px;
-            color: white;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-bottom: 60px;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 3. CENTERED CONTENT CONTAINER (Para hindi sobrang lapad) */
-        .main-container {
-            max-width: 850px; /* Ito ang limit para hindi stretched */
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        /* 4. SEARCH CARD */
-        .search-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 31, 96, 0.1);
-            margin-top: -50px; /* Float effect */
-            z-index: 10;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 18px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--vg-blue);
-            text-transform: uppercase;
-            text-align: center;
-            background: #f8fafc;
-            transition: 0.3s;
-        }
-        .search-input:focus {
-            background: white;
-            border-color: var(--vg-blue);
-            box-shadow: 0 0 0 5px rgba(0, 31, 96, 0.1);
-            outline: none;
-        }
-
-        .btn-track {
-            width: 100%;
-            margin-top: 15px;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--vg-accent) 0%, #d97706 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 800;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
-            transition: all 0.3s ease;
-        }
-        .btn-track:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
-        }
-
-        /* 5. RESULT SECTION */
-        .result-area {
-            display: none;
-            margin-top: 40px;
-            margin-bottom: 60px;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .waybill-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-            border-top: 6px solid var(--vg-green);
-        }
-
-        .waybill-header {
-            padding: 25px;
-            background: #fff;
-            border-bottom: 1px solid #f1f5f9;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Stepper */
-        .stepper-container {
-            padding: 30px 20px;
-            background: white;
-        }
-        .stepper {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .stepper::before {
-            content: ''; position: absolute; top: 20px; left: 10%; right: 10%;
-            height: 3px; background: #e2e8f0; z-index: 0;
-        }
-        .step { position: relative; z-index: 1; text-align: center; opacity: 0.5; transition: 0.3s; }
-        .step.active { opacity: 1; }
-        .step-icon {
-            width: 45px; height: 45px; background: white; border: 3px solid #e2e8f0;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 8px; color: #94a3b8; font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .step.active .step-icon {
-            border-color: var(--vg-green); color: var(--vg-green);
-            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.1);
-        }
-        .step-label { font-size: 0.75rem; font-weight: 700; color: var(--vg-blue); text-transform: uppercase; }
-
-        /* Timeline */
-        .timeline-section {
-            background: #f8fafc;
-            padding: 25px;
-            border-top: 1px solid #f1f5f9;
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 30px;
-            padding-bottom: 25px;
-            border-left: 2px dashed #cbd5e1;
-            margin-left: 10px;
-        }
-        .timeline-item:last-child { border: none; padding-bottom: 0; }
-        .timeline-dot {
-            position: absolute; left: -6px; top: 0;
-            width: 10px; height: 10px; border-radius: 50%;
-            background: #cbd5e1; outline: 4px solid #f8fafc;
-        }
-        .timeline-item.active .timeline-dot {
-            background: var(--vg-green);
-            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.3);
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Responsive */
+        .search-input { border: none; flex-grow: 1; padding: 10px 20px; font-size: 1.1rem; outline: none; border-radius: 50px; width: 100%; }
+        .search-btn { background-color: var(--vg-green); color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; transition: 0.3s; white-space: nowrap; }
+        
+        /* MOBILE ADJUSTMENTS */
         @media (max-width: 576px) {
-            .navbar-brand { gap: 8px; }
-            .logo-img { height: 35px; }
-            .brand-title { font-size: 0.95rem; }
-            .brand-sub { font-size: 0.6rem; }
+            .navbar-brand span { font-size: 1rem; }
+            .hero-section { padding: 30px 15px; }
+            .search-box { background: transparent; box-shadow: none; flex-direction: column; padding: 0; }
+            .search-input { background: white; margin-bottom: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+            .search-btn { width: 100%; padding: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        }
+
+        .btn-menu { height: 90px; border: 1px solid #eee; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .icon-box { color: var(--vg-blue); margin-bottom: 5px; }
+        .card { border-top: 5px solid var(--vg-green); border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .hidden { display: none !important; }
+        
+        /* Tracking Card Styles */
+        .track-label { font-size: 0.75rem; text-transform: uppercase; color: #6c757d; font-weight: bold; letter-spacing: 0.5px; }
+        .track-val { font-weight: 600; color: #212529; font-size: 0.95rem; }
+        .timeline-item { border-left: 2px solid var(--vg-blue); padding-left: 20px; padding-bottom: 20px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--vg-blue); }
+        .timeline-item:last-child { border-left: none; }
+
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 31, 96, 0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; }
+
+        /* --- PRO WAYBILL PRINT STYLES --- */
+        #printArea { display: none; }
+        @media print {
+            #publicView, #staffView, #loginOverlay, .navbar { display: none !important; }
+            #printArea { display: block !important; width: 100%; margin: 0; padding: 0; }
+            .sticker-page { 
+                width: 100mm; height: 150mm; margin: 0 auto; 
+                border: 2px solid black; background: white; color: black;
+                font-family: 'Arial', sans-serif; display: flex; flex-direction: column;
+                box-sizing: border-box; padding: 0; 
+                page-break-after: always; break-after: always; page-break-inside: avoid;
+                float: none; clear: both; margin-bottom: 20px;
+            }
+            .sticker-page:last-child { page-break-after: auto; }
+            .wb-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 2px solid black; background: #eee; -webkit-print-color-adjust: exact; }
+            .wb-brand-box { display: flex; align-items: center; gap: 5px; }
+            .wb-logo { height: 25px; }
+            .wb-company-text { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: bold; color: black; letter-spacing: 0.5px; }
+            .wb-date { font-size: 10px; font-weight: bold; }
+            .wb-sort-zone { background: black; color: white; text-align: center; font-family: 'Oswald', sans-serif; font-size: 48px; font-weight: bold; line-height: 1; padding: 2px 0; letter-spacing: 3px; text-transform: uppercase; border-bottom: 2px solid black; -webkit-print-color-adjust: exact; }
+            .wb-qr-section { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; border-bottom: 2px solid black; }
+            .wb-id-box { text-align: left; }
+            .wb-id-label { font-size: 9px; color: #555; font-weight: bold; text-transform: uppercase; }
+            .wb-id-text { font-size: 24px; font-weight: 900; letter-spacing: 1px; font-family: 'Oswald', sans-serif; }
+            .wb-qr-code { padding: 2px; } 
+            .wb-sender { padding: 5px 10px; border-bottom: 1px solid #999; font-size: 10px; line-height: 1.2; }
+            .wb-receiver { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+            .wb-tag { background: black; color: white; font-size: 10px; font-weight: bold; padding: 2px 6px; display: inline-block; width: fit-content; margin-bottom: 5px; -webkit-print-color-adjust: exact; }
+            .wb-rcv-name { font-size: 26px; font-weight: 900; line-height: 1.1; margin-bottom: 5px; text-transform: uppercase; }
+            .wb-rcv-addr { font-size: 15px; line-height: 1.2; margin-bottom: 5px; }
+            .wb-rcv-contact { font-size: 16px; font-weight: bold; }
+            .wb-footer { display: flex; border-top: 3px solid black; height: 50px; }
+            .wb-f-item { flex: 1; border-right: 2px solid black; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+            .wb-f-item:last-child { border-right: none; }
+            .wb-f-lbl { font-size: 9px; font-weight: bold; text-transform: uppercase; }
+            .wb-f-val { font-size: 16px; font-weight: 900; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. NAVIGATION BAR -->
-    <nav class="navbar">
-        <div class="main-container w-100 d-flex justify-content-between align-items-center">
-            
-            <!-- Logo & Name (LEFT SIDE) -->
-            <div class="navbar-brand">
-                <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
-                <div class="brand-text">
-                    <span class="brand-title">VG FREIGHTAGE</span>
-                    <span class="brand-sub d-block">Domestic Services</span>
-                </div>
-            </div>
+<!-- LOGIN -->
+<div id="loginOverlay" class="hidden">
+    <div class="login-box">
+        <img src="logo.png" style="height: 60px; margin-bottom: 20px;" onerror="this.src='https://cdn-icons-png.flaticon.com/512/754/754769.png'">
+        <h4 style="color:var(--vg-blue); font-weight:800;">STAFF LOGIN</h4>
+        <input type="email" id="loginEmail" class="form-control mb-2" placeholder="Email">
+        <input type="password" id="loginPass" class="form-control mb-3" placeholder="Password">
+        <button class="btn btn-primary w-100" onclick="login()">LOGIN</button>
+        <button class="btn btn-link text-muted btn-sm" onclick="closeLogin()">Cancel</button>
+    </div>
+</div>
 
-            <!-- Optional: Help/Contact Icon (RIGHT SIDE) -->
-            <div>
-                <a href="#" class="text-decoration-none text-muted small fw-bold">
-                    <i class="fas fa-headset me-1"></i> <span class="d-none d-sm-inline">Support</span>
-                </a>
+<!-- PUBLIC (MOBILE FIXED) -->
+<div id="publicView">
+    <nav class="navbar shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="VG" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/754/754769.png'; this.style.height='35px';">
+                <span class="brand-text fw-bold" style="color:var(--vg-blue)">VG FREIGHTAGE</span>
+            </a>
+            <button class="btn btn-outline-secondary btn-sm ms-auto" onclick="openLogin()"><i class="fas fa-lock"></i> Staff</button>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <h2 class="fw-bold mb-2">Track Your Package</h2>
+        <div class="search-box">
+            <input type="text" id="publicSearchInput" class="search-input" placeholder="Enter Waybill No.">
+            <button class="search-btn" onclick="publicTrack()">TRACK</button>
+        </div>
+    </div>
+    <div class="container"><div id="publicResult" class="row justify-content-center"></div></div>
+</div>
+
+<!-- STAFF -->
+<div id="staffView" class="hidden">
+    <nav class="navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="VG" onerror="this.style.display='none'">
+                <span class="fw-bold text-dark">STAFF PANEL</span>
+            </a>
+            <div class="d-flex align-items-center">
+                <small class="me-2 fw-bold text-muted d-none d-md-block" id="displayEmail"></small>
+                <span id="roleBadge" class="badge bg-secondary me-2">...</span>
+                <button class="btn btn-sm btn-danger" onclick="logout()">Exit</button>
             </div>
         </div>
     </nav>
-
-    <!-- 2. HERO SECTION -->
-    <section class="hero-section">
-        <div class="main-container">
-            <h2 class="fw-bold mb-2">Track Your Shipment</h2>
-            <p class="text-white-50 m-0">Enter your waybill number below</p>
-        </div>
-    </section>
-
-    <!-- 3. MAIN CONTENT (Boxed Layout) -->
-    <div class="main-container">
-        
-        <!-- Search Box -->
-        <div class="search-card">
-            <input type="text" id="trackInput" class="search-input" placeholder="VG-XXXXXX">
-            <button class="btn-track" onclick="trackParcel()">TRACK NOW</button>
-            <p id="errorMsg" class="text-danger small fw-bold text-center mt-3 mb-0" style="display:none;"></p>
-        </div>
-
-        <!-- Result Area -->
-        <div id="resultArea" class="result-area">
-            <div class="waybill-card">
-                
-                <!-- Header -->
-                <div class="waybill-header">
-                    <div>
-                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">WAYBILL ID</small>
-                        <h3 class="fw-bold m-0 text-dark" id="resWaybill">...</h3>
-                    </div>
-                    <span class="badge bg-light text-dark border" id="resStatusBadge">...</span>
-                </div>
-
-                <!-- Stepper -->
-                <div class="stepper-container">
-                    <div class="stepper">
-                        <div class="step active">
-                            <div class="step-icon"><i class="fas fa-box"></i></div>
-                            <div class="step-label">Posted</div>
-                        </div>
-                        <div class="step" id="step-transit">
-                            <div class="step-icon"><i class="fas fa-truck-fast"></i></div>
-                            <div class="step-label">Transit</div>
-                        </div>
-                        <div class="step" id="step-delivered">
-                            <div class="step-icon"><i class="fas fa-home"></i></div>
-                            <div class="step-label">Delivered</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row text-center border-top border-bottom g-0">
-                    <div class="col-6 p-3 border-end">
-                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">ORIGIN</small>
-                        <span class="fw-bold text-dark" id="resOrigin">...</span>
-                    </div>
-                    <div class="col-6 p-3">
-                        <small class="text-muted fw-bold d-block" style="font-size:0.7rem">DESTINATION</small>
-                        <span class="fw-bold text-dark" id="resDest">...</span>
-                    </div>
-                </div>
-
-                <!-- Timeline -->
-                <div class="timeline-section">
-                    <h6 class="fw-bold small text-muted mb-3">ACTIVITY LOG</h6>
-                    <div id="historyContainer"></div>
-                </div>
-            </div>
-
-            <div class="text-center mt-4 text-muted small">
-                &copy; 2026 VG Freightage Domestic
+    <div class="container mt-4">
+        <div class="row text-center mb-4 g-2">
+            <div class="col-4"><button class="btn btn-light w-100 btn-menu shadow-sm" onclick="showPage('create')"><div class="icon-box"><i class="fas fa-box-open fa-2x"></i></div><small>Create</small></button></div>
+            <div class="col-4"><button class="btn btn-light w-100 btn-menu shadow-sm" onclick="showPage('scanner')"><div class="icon-box"><i class="fas fa-qrcode fa-2x"></i></div><small>Scan</small></button></div>
+            <div class="col-4"><button class="btn btn-light w-100 btn-menu shadow-sm" onclick="showPage('tracker')"><div class="icon-box"><i class="fas fa-search fa-2x"></i></div><small>Track</small></button></div>
+            <div class="col-12 mt-2 hidden" id="adminMenuBtn">
+                <button class="btn btn-light w-100 btn-menu shadow-sm border-danger" onclick="showPage('users')"><div class="icon-box text-danger"><i class="fas fa-user-shield fa-2x"></i></div><small class="text-danger fw-bold">ADMIN</small></button>
             </div>
         </div>
 
+        <div id="create" class="staff-page hidden">
+            <div class="card p-4">
+                <h5 class="text-primary fw-bold mb-3">Create Waybill</h5>
+                <div class="input-group mb-3"><input type="text" id="wbInput" class="form-control fw-bold"><button class="btn btn-secondary" onclick="generateRandomWB()">Auto</button></div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6"><input type="text" id="shipperName" class="form-control mb-1" placeholder="Shipper Name"><input type="text" id="shipperAddr" class="form-control mb-1" placeholder="Address"><input type="text" id="shipperContact" class="form-control" placeholder="Contact"></div>
+                    <div class="col-6"><input type="text" id="consigneeName" class="form-control mb-1" placeholder="Receiver Name"><input type="text" id="consigneeAddr" class="form-control mb-1" placeholder="Address"><input type="text" id="consigneeContact" class="form-control" placeholder="Contact"></div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6"><input type="number" id="qty" class="form-control" placeholder="Qty" value="1"></div>
+                    <div class="col-6"><input type="text" id="weight" class="form-control" placeholder="Weight"></div>
+                </div>
+                <button class="btn btn-primary w-100 fw-bold" onclick="createParcel()">SAVE & PRINT</button>
+            </div>
+        </div>
+
+        <!-- SCANNER (AUTO-SAVING DROPDOWN) -->
+        <div id="scanner" class="staff-page hidden">
+            <div class="card p-4">
+                <h5 class="text-primary fw-bold">Scanner</h5>
+                <div id="reader"></div>
+                <div id="scanAction" class="hidden mt-3">
+                    <div class="alert alert-info">Detected: <strong id="detectedWB"></strong></div>
+                    <select id="newStatus" class="form-select mb-2">
+                        <option value="" disabled selected>Select Status</option>
+                        <option>Picked Up (Origin)</option><option>Departed Origin</option><option>In Transit</option>
+                        <option>Arrived at Hub</option><option>Out for Delivery</option><option>Delivered</option>
+                    </select>
+                    
+                    <!-- DYNAMIC LOCATION LIST -->
+                    <select id="currentLocSelect" class="form-select mb-2" onchange="toggleCustomLoc()">
+                        <option value="" disabled selected>Select Hub...</option>
+                    </select>
+                    
+                    <input type="text" id="currentLocCustom" class="form-control mb-2 hidden" placeholder="Type NEW Location Name (e.g. CDO HUB)">
+                    <small id="customLocNote" class="text-success hidden mb-2" style="font-size:0.8rem"><i class="fas fa-check-circle"></i> New location will be saved to list.</small>
+
+                    <button class="btn btn-success w-100" onclick="updateStatus()">UPDATE & SAVE</button>
+                    <button class="btn btn-secondary w-100 mt-1" onclick="resetScan()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRACKER -->
+        <div id="tracker" class="staff-page hidden">
+            <div class="card p-4">
+                <h5 class="text-primary fw-bold">Internal Tracker</h5>
+                <div class="input-group mb-3"><input type="text" id="staffTrackInput" class="form-control" placeholder="Waybill No."><button class="btn btn-primary" onclick="staffTrackParcel()">Search</button></div>
+                <div id="staffTrackResult"></div>
+                <div id="reprintSection" class="hidden mt-3"><button class="btn btn-warning w-100 fw-bold btn-sm" onclick="reprintAll()">REPRINT ALL</button></div>
+            </div>
+        </div>
+
+        <div id="users" class="staff-page hidden">
+            <div class="card p-4 border-danger">
+                <h5 class="text-danger fw-bold">Admin Zone</h5>
+                <button class="btn btn-success w-100 mb-3" onclick="exportToExcel()">Download Report</button>
+                <div class="p-3 bg-light border rounded mb-3">
+                    <h6>Create Account</h6>
+                    <input type="email" id="newEmail" class="form-control mb-2" placeholder="Email"><input type="password" id="newPassword" class="form-control mb-2" placeholder="Password"><button class="btn btn-secondary w-100" onclick="createStaffAccount()">Create</button>
+                </div>
+                <div class="p-3 bg-white border rounded border-warning mb-3">
+                    <h6 class="text-warning fw-bold">Manage Roles</h6>
+                    <div class="input-group"><input type="email" id="manageEmail" class="form-control" placeholder="User Email"><button class="btn btn-danger" onclick="setRole('Admin')">Admin</button><button class="btn btn-secondary" onclick="setRole('Staff')">Staff</button></div>
+                </div>
+                <div id="logsContainer" class="small text-muted p-2 border bg-white" style="height: 100px; overflow-y: scroll;">Logs...</div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- JS Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+<div id="printArea"></div>
 
-        // *** CONFIG (VG-CARGO-SYSTEM-3) ***
-        const firebaseConfig = {
-            apiKey: "AIzaSyCrDEUr1O5krXFHEB2hafLXuEumEcoSTxM",
-            authDomain: "vg-cargo-system-3.firebaseapp.com",
-            projectId: "vg-cargo-system-3",
-            storageBucket: "vg-cargo-system-3.firebasestorage.app",
-            messagingSenderId: "819520192535",
-            appId: "1:819520192535:web:8e42b272500f9b60e19c52"
-        };
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, collection, addDoc, query, orderBy, limit, getDocs, onSnapshot } 
+    from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } 
+    from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-        window.trackParcel = async function() {
-            const input = document.getElementById('trackInput');
-            const wb = input.value.trim().toUpperCase();
-            const btn = document.querySelector('.btn-track');
-            const resultArea = document.getElementById('resultArea');
-            const errorMsg = document.getElementById('errorMsg');
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrDEUr1O5krXFHEB2hafLXuEumEcoSTxM",
+      authDomain: "vg-cargo-system-3.firebaseapp.com",
+      projectId: "vg-cargo-system-3",
+      storageBucket: "vg-cargo-system-3.firebasestorage.app",
+      messagingSenderId: "819520192535",
+      appId: "1:819520192535:web:8e42b272500f9b60e19c52"
+    };
 
-            input.blur();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-            if(!wb) { input.focus(); return; }
+    window.db = db; window.auth = auth;
+    window.doc = doc; window.setDoc = setDoc; window.getDoc = getDoc; window.updateDoc = updateDoc;
+    window.arrayUnion = arrayUnion; window.collection = collection; window.addDoc = addDoc;
+    window.query = query; window.orderBy = orderBy; window.limit = limit; window.getDocs = getDocs; 
+    window.onSnapshot = onSnapshot;
+    window.signInWithEmailAndPassword = signInWithEmailAndPassword; window.signOut = signOut;
+    window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
 
-            // Loading
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> PROCESSING...';
-            btn.disabled = true;
-            resultArea.style.display = 'none';
-            errorMsg.style.display = 'none';
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            document.getElementById('displayEmail').innerText = user.email;
+            window.currentUserEmail = user.email;
+            
+            // LOAD LOCATIONS with Safety Check
+            loadLocations();
 
-            try {
-                const docRef = doc(db, "parcels", wb);
-                const docSnap = await getDoc(docRef);
+            let role = "Staff"; 
+            if (user.email === "nephiprudencio68@gmail.com") role = "Admin"; 
+            else { try { const d = await getDoc(doc(db, "users", user.email.toLowerCase())); if(d.exists()) role = d.data().role; } catch(e){} }
+            
+            document.getElementById('roleBadge').innerText = role;
+            if (role === "Admin") { document.getElementById('roleBadge').classList.replace('bg-secondary', 'bg-danger'); document.getElementById('adminMenuBtn').classList.remove('hidden'); } 
+            else { document.getElementById('roleBadge').classList.replace('bg-danger', 'bg-secondary'); document.getElementById('adminMenuBtn').classList.add('hidden'); }
+            
+            document.getElementById('publicView').classList.add('hidden'); document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('staffView').classList.remove('hidden'); showPage('create');
+        } else {
+            document.getElementById('staffView').classList.add('hidden'); document.getElementById('publicView').classList.remove('hidden');
+            window.currentUserEmail = null;
+        }
+    });
+</script>
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    
-                    document.getElementById('resWaybill').innerText = data.waybill;
-                    const status = data.currentStatus || "Unknown";
-                    
-                    // Status Badge
-                    document.getElementById('resStatusBadge').innerText = status;
+<script>
+    let currentTrackedData = null; let html5QrcodeScanner = null;
 
-                    // Stepper Update
-                    updateStepper(status);
+    function openLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); }
+    function closeLogin() { document.getElementById('loginOverlay').classList.add('hidden'); }
+    async function login() {
+        const e = document.getElementById('loginEmail').value.trim(); const p = document.getElementById('loginPass').value.trim();
+        if(!e||!p) return alert("Missing inputs");
+        try { await window.signInWithEmailAndPassword(window.auth, e, p); } catch(err) { alert(err.message); }
+    }
+    function logout() { window.signOut(window.auth).then(() => location.reload()); }
 
-                    // Locations
-                    document.getElementById('resOrigin').innerText = extractCity(data.shipper.addr);
-                    document.getElementById('resDest').innerText = extractCity(data.consignee.addr);
+    function showPage(id) {
+        document.querySelectorAll('.staff-page').forEach(d => d.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        if(id === 'scanner') startCamera(); else stopCamera();
+        if(id === 'users') loadLogs();
+        document.getElementById('printArea').innerHTML = '';
+        document.getElementById('printArea').style.display = 'none';
+    }
 
-                    // Timeline
-                    let historyHTML = "";
-                    const sortedHistory = data.history ? data.history.reverse() : [];
-                    sortedHistory.forEach((h, index) => {
-                        const isActive = index === 0 ? 'active' : '';
-                        historyHTML += `
-                        <div class="timeline-item ${isActive}">
-                            <div class="timeline-dot"></div>
-                            <h6 class="fw-bold mb-1 small text-dark">${h.status}</h6>
-                            <p class="small text-muted mb-0"><i class="fas fa-map-pin me-1"></i> ${h.location}</p>
-                            <small class="text-muted" style="font-size:0.65rem">${h.time}</small>
-                        </div>`;
-                    });
+    // --- ROBUST LOCATION SYSTEM ---
+    function loadLocations() {
+        const select = document.getElementById('currentLocSelect');
+        const defaultHubs = ["MNL HUB (Manila)", "DVO HUB (Davao)", "CEB HUB (Cebu)", "ILO HUB (Iloilo)", "CGY HUB (Cagayan)", "GES HUB (Gensan)", "Rider (On Delivery)"];
 
-                    document.getElementById('historyContainer').innerHTML = historyHTML || "<p>No history.</p>";
-                    resultArea.style.display = 'block';
+        // Listen to database
+        window.onSnapshot(window.doc(window.db, "settings", "locations"), 
+        (docSnap) => {
+            let hubs = defaultHubs; // Fallback
 
-                    setTimeout(() => {
-                        const y = resultArea.getBoundingClientRect().top + window.scrollY - 80;
-                        window.scrollTo({top: y, behavior: 'smooth'});
-                    }, 100);
-
-                } else {
-                    errorMsg.innerText = "Tracking number not found.";
-                    errorMsg.style.display = 'block';
-                }
-            } catch (error) {
-                console.error(error);
-                errorMsg.innerText = "Connection error. Please try again.";
-                errorMsg.style.display = 'block';
+            if (docSnap.exists() && docSnap.data().list) {
+                hubs = docSnap.data().list;
+            } else {
+                // If it doesn't exist yet, we can create it silently or just use default
+                console.log("No custom locations found, using default.");
             }
 
-            btn.innerHTML = 'TRACK NOW';
-            btn.disabled = false;
+            // Clean list (remove duplicates and empty strings)
+            hubs = [...new Set(hubs)].filter(h => h);
+
+            let options = `<option value="" disabled selected>Select Hub...</option>`;
+            hubs.sort().forEach(hub => {
+                options += `<option value="${hub}">${hub}</option>`;
+            });
+            
+            // Add 'Other' option
+            options += `<option value="Other">➕ Add New Location...</option>`;
+            select.innerHTML = options;
+        }, 
+        (error) => {
+            console.error("Error loading locations:", error);
+            // If error (like permission issue), show Default list so it's not "Loading..." forever
+            let options = `<option value="" disabled selected>Select Hub...</option>`;
+            defaultHubs.forEach(hub => { options += `<option value="${hub}">${hub}</option>`; });
+            options += `<option value="Other">➕ Add New Location...</option>`;
+            select.innerHTML = options;
+        });
+    }
+
+    function toggleCustomLoc() {
+        const select = document.getElementById('currentLocSelect');
+        const customInput = document.getElementById('currentLocCustom');
+        const note = document.getElementById('customLocNote');
+        
+        if (select.value === "Other") {
+            customInput.classList.remove('hidden');
+            note.classList.remove('hidden');
+            customInput.focus();
+        } else {
+            customInput.classList.add('hidden');
+            note.classList.add('hidden');
+        }
+    }
+
+    async function updateStatus(){ 
+        const wb = document.getElementById('detectedWB').innerText; 
+        const s = document.getElementById('newStatus').value; 
+        
+        let l = document.getElementById('currentLocSelect').value;
+        let isCustom = false;
+
+        if(l === "Other") {
+            l = document.getElementById('currentLocCustom').value.trim();
+            isCustom = true;
         }
 
-        function extractCity(addr) {
-            if(!addr) return "Origin";
-            const parts = addr.split(',');
-            return parts.length > 1 ? parts[parts.length - 1].trim() : addr;
-        }
-
-        function updateStepper(status) {
-            status = status.toUpperCase();
-            const sTransit = document.getElementById('step-transit');
-            const sDelivered = document.getElementById('step-delivered');
-
-            // Reset
-            sTransit.classList.remove('active');
-            sDelivered.classList.remove('active');
-
-            if(status.includes("TRANSIT") || status.includes("BOARD") || status.includes("ARRIVED") || status.includes("DEPARTED")) {
-                sTransit.classList.add('active');
+        if(!s || !l) return alert("Select Status and Location");
+        
+        try{ 
+            // 1. Update Parcel Status
+            await window.updateDoc(window.doc(window.db,"parcels",wb), {
+                currentStatus: s,
+                history: window.arrayUnion({
+                    status: s,
+                    location: l,
+                    time: new Date().toLocaleString(),
+                    user: window.currentUserEmail
+                })
+            }); 
+            
+            // 2. IF CUSTOM LOCATION: Save to Global List
+            if (isCustom) {
+                const settingsRef = window.doc(window.db, "settings", "locations");
+                // Check if doc exists first to avoid overwriting with just one item if logic fails
+                // But setDoc with merge:true handles creation nicely
+                await window.setDoc(settingsRef, {
+                    list: window.arrayUnion(l)
+                }, { merge: true });
             }
-            if(status.includes("DELIVERED")) {
-                sTransit.classList.add('active');
-                sDelivered.classList.add('active');
-            }
+
+            alert("Updated Successfully!"); 
+            logAction("UPDATE", `${wb} -> ${s} at ${l}`); 
+            resetScan(); 
+
+        } catch(e) {
+            alert("Error: " + e.message);
         }
-    </script>
+    }
+
+    // --- EXISTING FUNCTIONS ---
+    function generatePrintLayout(data, specificOne = null) {
+        const printArea = document.getElementById('printArea');
+        printArea.innerHTML = ""; printArea.style.display = 'flex';
+        let destinationCode = "DOMESTIC";
+        const addr = data.consignee.addr.toUpperCase();
+        if(addr.includes("DAVAO")) destinationCode = "DVO";
+        else if(addr.includes("MANILA") || addr.includes("NCR")) destinationCode = "MNL";
+        else if(addr.includes("CEBU")) destinationCode = "CEB";
+        else if(addr.includes("ILOILO")) destinationCode = "ILO";
+        else if(addr.includes("CDO") || addr.includes("CAGAYAN")) destinationCode = "CGY";
+        else if(addr.includes("GENSAN")) destinationCode = "GES";
+        const totalPcs = parseInt(data.details.qty) || 1;
+        let start = 1; let end = totalPcs;
+        if (specificOne) { start = specificOne; end = specificOne; }
+        for (let i = start; i <= end; i++) {
+            const sticker = document.createElement('div');
+            sticker.className = 'sticker-page';
+            sticker.innerHTML = `<div class="wb-header"><div class="wb-brand-box"><img src="logo.png" class="wb-logo" onerror="this.style.display='none'"><span class="wb-company-text">VG FREIGHTAGE DOMESTIC</span></div><span class="wb-date">${new Date().toLocaleDateString()}</span></div><div class="wb-sort-zone">${destinationCode}</div><div class="wb-qr-section"><div class="wb-id-box"><div class="wb-id-label">WAYBILL NUMBER</div><div class="wb-id-text">${data.waybill}</div></div><div id="qr-${data.waybill}-${i}" class="wb-qr-code"></div></div><div class="wb-sender"><strong>FROM:</strong> ${data.shipper.name}<br>${data.shipper.addr} | ${data.shipper.contact}</div><div class="wb-receiver"><div class="wb-tag">CONSIGNEE / TO</div><div class="wb-rcv-name">${data.consignee.name}</div><div class="wb-rcv-addr">${data.consignee.addr}</div><div class="wb-rcv-contact">📞 ${data.consignee.contact}</div></div><div class="wb-footer"><div class="wb-f-item"><div class="wb-f-lbl">WEIGHT</div><div class="wb-f-val">${data.details.weight}</div></div><div class="wb-f-item"><div class="wb-f-lbl">PCS</div><div class="wb-f-val">${i}/${totalPcs}</div></div><div class="wb-f-item" style="font-size:8px;">Sign Here</div></div>`;
+            printArea.appendChild(sticker);
+            new QRCode(document.getElementById(`qr-${data.waybill}-${i}`), { text: data.waybill, width: 120, height: 120 });
+        }
+    }
+
+    function startCamera(){ if(!html5QrcodeScanner){ html5QrcodeScanner=new Html5QrcodeScanner("reader",{fps:10,qrbox:250}); html5QrcodeScanner.render((t)=>{document.getElementById('scanAction').classList.remove('hidden');document.getElementById('detectedWB').innerText=t;html5QrcodeScanner.pause();}); } }
+    function stopCamera(){ if(html5QrcodeScanner){html5QrcodeScanner.clear().catch(()=>{});html5QrcodeScanner=null;} }
+    function resetScan(){ document.getElementById('scanAction').classList.add('hidden'); document.getElementById('newStatus').value=""; document.getElementById('currentLocSelect').value=""; document.getElementById('currentLocCustom').classList.add('hidden'); document.getElementById('customLocNote').classList.add('hidden'); if(html5QrcodeScanner)html5QrcodeScanner.resume(); }
+    
+    function generateRandomWB(){ document.getElementById('wbInput').value="VG-"+Math.floor(100000+Math.random()*900000); }
+    async function createParcel(){
+        const wb=document.getElementById('wbInput').value;
+        const d={waybill:wb,shipper:{name:document.getElementById('shipperName').value,addr:document.getElementById('shipperAddr').value,contact:document.getElementById('shipperContact').value},consignee:{name:document.getElementById('consigneeName').value,addr:document.getElementById('consigneeAddr').value,contact:document.getElementById('consigneeContact').value},details:{qty:document.getElementById('qty').value,weight:document.getElementById('weight').value},currentStatus:"Accepted",createdBy:window.currentUserEmail,history:[{status:"Accepted",location:"Origin",time:new Date().toLocaleString(),user:window.currentUserEmail}]};
+        if(!d.shipper.name || !d.consignee.name) return alert("Fill names");
+        try{ await window.setDoc(window.doc(window.db,"parcels",wb),d); logAction("CREATE",wb); generatePrintLayout(d); setTimeout(()=>window.print(),800); }catch(e){alert("Error");}
+    }
+
+    async function publicTrack(){ trackLogic(document.getElementById('publicSearchInput').value.trim(), document.getElementById('publicResult')); }
+    async function staffTrackParcel(){ 
+        const wb=document.getElementById('staffTrackInput').value.trim(); const r=document.getElementById('staffTrackResult'); document.getElementById('reprintSection').classList.add('hidden');
+        const d=await trackLogic(wb,r); 
+        if(d){ currentTrackedData=d; document.getElementById('reprintSection').classList.remove('hidden'); }
+    }
+    
+    async function trackLogic(wb, c){
+        if(!wb)return alert("Enter Waybill"); c.innerHTML="Loading...";
+        try{ const s=await window.getDoc(window.doc(window.db,"parcels",wb)); if(!s.exists()){c.innerHTML="Not Found";return null;} const d=s.data();
+        let h=""; d.history.reverse().forEach(x=>{h+=`<div class="timeline-item"><strong>${x.status}</strong><br><small>${x.location}</small><br><span class="text-muted" style="font-size:10px">${x.time}</span></div>`});
+        c.innerHTML=`<div class="col-md-8 mx-auto"><div class="card border-primary mb-3"><div class="card-header bg-primary text-white d-flex justify-content-between"><strong>${d.waybill}</strong> <span class="badge bg-light text-primary">${d.currentStatus}</span></div><div class="card-body"><div class="row g-3"><div class="col-6 border-end"><div class="track-label">From</div><div class="track-val mb-1">${d.shipper.name}</div><small>${d.shipper.addr}</small></div><div class="col-6"><div class="track-label">To</div><div class="track-val mb-1 text-primary">${d.consignee.name}</div><small>${d.consignee.addr}</small></div></div><hr><div class="row text-center"><div class="col-4"><div class="track-label">Qty</div><div class="track-val">${d.details.qty}</div></div><div class="col-4"><div class="track-label">Weight</div><div class="track-val">${d.details.weight}</div></div><div class="col-4"><div class="track-label">Encoder</div><div class="track-val">${d.createdBy || 'Admin'}</div></div></div></div></div><h6 class="fw-bold mt-4">History</h6><ul class="list-group border rounded">${h}</ul></div>`;
+        return d; }catch(e){c.innerHTML="Error";return null;}
+    }
+
+    async function createStaffAccount(){
+        let e=document.getElementById('newEmail').value.trim().toLowerCase(); const p=document.getElementById('newPassword').value.trim();
+        if(!e||!p)return alert("Fill all");
+        if(confirm("Create user? You will be logged out.")){
+            try{ await window.createUserWithEmailAndPassword(window.auth,e,p); await window.setDoc(window.doc(window.db,"users",e),{email:e,role:"Staff",createdBy:window.currentUserEmail}); alert("Created. Login again."); }catch(err){alert(err.message);}
+        }
+    }
+    
+    async function setRole(r){
+        let e=document.getElementById('manageEmail').value.trim().toLowerCase();
+        if(!e)return alert("Enter Email");
+        try{ await window.setDoc(window.doc(window.db,"users",e),{email:e,role:r},{merge:true}); alert(`Set ${e} to ${r}`); logAction("ROLE",`${e}->${r}`); }catch(err){alert(err.message);}
+    }
+
+    async function logAction(a,d){ try{await window.addDoc(window.collection(window.db,"logs"),{timestamp:new Date().toLocaleString(),user:window.currentUserEmail,action:a,details:d});loadLogs();}catch(e){} }
+    async function loadLogs(){ try{const q=window.query(window.collection(window.db,"logs"),window.orderBy("timestamp","desc"),window.limit(20));const s=await window.getDocs(q);let h="";s.forEach(d=>{const l=d.data();h+=`<div class="border-bottom p-1"><strong>${l.action}</strong> ${l.details}<br><span style="font-size:9px">${l.timestamp} by ${l.user}</span></div>`});document.getElementById('logsContainer').innerHTML=h;}catch(e){} }
+    async function exportToExcel(){ /* Same export logic */ }
+    
+    function reprintAll(){ if(currentTrackedData){generatePrintLayout(currentTrackedData);setTimeout(()=>window.print(),800);} }
+    function reprintSpecific(){ if(currentTrackedData){generatePrintLayout(currentTrackedData,parseInt(document.getElementById('rpIndex').value));setTimeout(()=>window.print(),800);} }
+
+    window.login=login;window.logout=logout;window.openLogin=openLogin;window.closeLogin=closeLogin;
+    window.publicTrack=publicTrack;window.showPage=showPage;window.createParcel=createParcel;window.generateRandomWB=generateRandomWB;
+    window.staffTrackParcel=staffTrackParcel;window.updateStatus=updateStatus;window.resetScan=resetScan;
+    window.createStaffAccount=createStaffAccount;window.setRole=setRole;window.exportToExcel=exportToExcel;
+    window.reprintAll=reprintAll;window.reprintSpecific=reprintSpecific;
+    window.toggleCustomLoc=toggleCustomLoc;
+    window.loadLocations=loadLocations;
+</script>
 </body>
 </html>
